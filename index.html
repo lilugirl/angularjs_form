@@ -56,6 +56,23 @@
 </form>
 <script>
 var app=angular.module('myApp',[])
+app.directive('ensureUnique',function($http){
+  return {
+    require:'ngModel',
+    link:function(scope,ele,attrs,c){
+      scope.$watch(attrs.ngModel,function(n){
+        console.log('n',n);
+        if(!n) return;
+        if(n==='liuyi'){
+          c.$setValidity('unique',false)
+        }else{
+          c.$setValidity('unique',true)
+        }
+      })
+    }
+  }
+})
+
 app.controller('signupController',function($scope){
   $scope.submitted=false;
   $scope.signupForm=function(){
